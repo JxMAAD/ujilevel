@@ -11,7 +11,7 @@ class StoreDiscountRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,13 +23,27 @@ class StoreDiscountRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string'],
-            'promo_code' => ['required', 'string', 'unique:discounts,promo_code'],
             'type' => ['required', 'in:global,event'],
             'discount_type' => ['required', 'in:percentage,fixed'],
             'discount_amount' => ['required', 'numeric'],
             'start_date' => ['nullable', 'date'],
             'end_date' => ['nullable', 'date', 'after_or_equal:start_date'],
             'status' => ['required', 'in:Draft,Public'],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'Nama diskon tidak boleh kosong.',
+            'type.required' => 'Tipe diskon tidak boleh kosong.',
+            'discount_type.required' => 'Tipe diskon tidak boleh kosong.',
+            'discount_amount.required' => 'Jumlah diskon tidak boleh kosong.',
+            'start_date.date' => 'Tanggal mulai tidak valid.',
+            'end_date.date' => 'Tanggal akhir tidak valid.',
+            'end_date.after_or_equal' => 'Tanggal akhir harus setelah atau sama dengan tanggal mulai.',
+            'status.required' => 'Status diskon tidak boleh kosong.',
+            'status.in' => 'Status diskon tidak valid.',
         ];
     }
 

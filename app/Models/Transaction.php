@@ -11,7 +11,7 @@ class Transaction extends Model
     use HasFactory;
 
     protected $table = 'transactions';
-  
+
     protected $fillable = ['user_id', 'total_harga', 'discount_id', 'status', 'final_amount', 'payment_method_id'];
 
     public function user()
@@ -33,7 +33,7 @@ class Transaction extends Model
     {
         return $this->belongsTo(Discount::class);
     }
-  
+
     protected function casts(): array
     {
         return [

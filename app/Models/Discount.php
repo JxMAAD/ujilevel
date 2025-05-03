@@ -29,4 +29,24 @@ class Discount extends Model
     {
         return $this->hasMany(Transaction::class);
     }
+
+    // Tambahkan method untuk generate promo code di model
+    public function generatePromoCode()
+    {
+        // Ambil nama, ubah ke uppercase dan buang spasi
+        $baseCode = strtoupper(str_replace(' ', '', $this->name));
+
+        // Tambahkan 4 digit random supaya lebih unik
+        $randomSuffix = rand(1000, 9999);
+
+        $promoCode = $baseCode . $randomSuffix;
+
+        // Pastikan benar-benar unik di database
+        while (self::where('promo_code', $promoCode)->exists()) {
+            $randomSuffix = rand(1000, 9999);
+            $promoCode = $baseCode . $randomSuffix;
+        }
+
+        return $promoCode;
+    }
 }

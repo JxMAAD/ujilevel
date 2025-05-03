@@ -48,12 +48,9 @@ Route::middleware('auth')->group(function () {
         Route::delete('/cart/{cartItem}', [CartController::class, 'destroy'])->name('cart.destroy');
 
         //discount
-        Route::get('/discount', [DiscountController::class, 'index'])->name('discount.index');
-        Route::get('/discount/add', [DiscountController::class, 'add'])->name('discount.create');
-        Route::post('/discount', [DiscountController::class, 'store'])->name('discount.store');
-        Route::get('/discount/{id}/edit', [DiscountController::class, 'edit'])->name('discount.edit');
-        Route::put('/discount/{id}', [DiscountController::class, 'update'])->name('discount.update');
-        Route::delete('/discount/{id}', [DiscountController::class, 'destroy'])->name('discount.destroy');
+        Route::resource('discount', DiscountController::class);
+
+        
     });
 
     Route::middleware('role:User')->prefix('user')->name('user.')->group(function () {
